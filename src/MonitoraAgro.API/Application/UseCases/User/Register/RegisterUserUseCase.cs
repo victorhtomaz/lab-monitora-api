@@ -41,7 +41,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         await _userRepository.Add(user);
         await _unitOfWork.Commit();
 
-        return new RegisteredUserResponse($"{user.FirstName} {user.LastName}");
+        return new RegisteredUserResponse($"{user.FirstName} {user.LastName}", string.Empty);
     }
 
     private async Task Validate(RegisterUserRequest request)

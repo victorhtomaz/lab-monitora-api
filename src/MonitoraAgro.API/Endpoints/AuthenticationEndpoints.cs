@@ -6,7 +6,7 @@ namespace MonitoraAgro.API.Endpoints;
 
 public static class AuthenticationEndpoints
 {
-    public static void MapUserEndpoints(this WebApplication app)
+    public static void MapAuthEndpoints(this WebApplication app)
     {
         var group = app.MapGroup("/auth")
             .WithTags("Auth");
