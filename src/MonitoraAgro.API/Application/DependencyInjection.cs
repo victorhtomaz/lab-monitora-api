@@ -1,0 +1,16 @@
+﻿using MonitoraAgro.API.Application.UseCases.User.Register;
+
+namespace MonitoraAgro.API.Application;
+
+public static class DependencyInjection
+{
+    public static void AddApplication(this IServiceCollection services)
+    {
+       AddUseCases(services);
+    }
+
+    private static void AddUseCases(IServiceCollection services)
+    {
+        services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
+    }
+}
