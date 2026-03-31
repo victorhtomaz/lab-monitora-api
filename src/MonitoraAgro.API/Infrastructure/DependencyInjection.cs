@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using InfluxDB.Client;
+using Microsoft.EntityFrameworkCore;
 using MonitoraAgro.API.Domain.Repositories;
 using MonitoraAgro.API.Domain.Security.Cryptography;
 using MonitoraAgro.API.Domain.Security.Tokens;
@@ -25,6 +26,11 @@ public static class DependencyInjection
         var connectionString = configuration.GetConnectionString("DefaultConnection");
 
         services.AddDbContext<MonitoraAgroDbContext>(options =>options.UseNpgsql(connectionString));
+    }
+    
+    private static void AddInfluxDB(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddSingleton<IInfluxDBClient>(o => new InfluxDBClient(""));
     }
 
     private static void AddRepositories(IServiceCollection services)
