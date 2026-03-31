@@ -28,5 +28,7 @@ app.UseHttpsRedirection();
 app.MapGet("/", () => "Hello");
 
 app.MapUserEndpoints();
+app.MapAuthEndpoints();
+
 
 app.Run();

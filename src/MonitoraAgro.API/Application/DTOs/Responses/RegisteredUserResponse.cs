@@ -1,3 +1,3 @@
 ﻿namespace MonitoraAgro.API.Application.DTOs.Responses;
 
-public record RegisteredUserResponse(string Name);
+public record RegisteredUserResponse(string Name, string AccessToken);

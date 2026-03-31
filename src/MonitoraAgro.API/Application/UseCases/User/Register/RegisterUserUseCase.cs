@@ -5,6 +5,7 @@ using MonitoraAgro.API.Application.Errors;
 using MonitoraAgro.API.Application.Errors.Exceptions;
 using MonitoraAgro.API.Domain.Repositories;
 using MonitoraAgro.API.Domain.Security.Cryptography;
+using MonitoraAgro.API.Domain.Security.Tokens;
 
 namespace MonitoraAgro.API.Application.UseCases.User.Register;
 
@@ -13,13 +14,16 @@ public class RegisterUserUseCase : IRegisterUserUseCase
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IPasswordEncripter _passwordHasher;
+    private readonly IAccessTokenGenerator _accessTokenGenerator;
     public RegisterUserUseCase(IUserRepository userRepository, 
         IUnitOfWork unitOfWork, 
-        IPasswordEncripter passwordHasher)
+        IPasswordEncripter passwordHasher,
+        IAccessTokenGenerator accessTokenGenerator)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
         _passwordHasher = passwordHasher;
+        _accessTokenGenerator = accessTokenGenerator;
     }
 
     public async Task<RegisteredUserResponse> Execute(RegisterUserRequest request)
@@ -41,7 +45,9 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         await _userRepository.Add(user);
         await _unitOfWork.Commit();
 
-        return new RegisteredUserResponse($"{user.FirstName} {user.LastName}");
+        var accessToken = _accessTokenGenerator.Generate(user.Id);
+
+        return new RegisteredUserResponse($"{user.FirstName} {user.LastName}", accessToken);
     }
 
     private async Task Validate(RegisterUserRequest request)
