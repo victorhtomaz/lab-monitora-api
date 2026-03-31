@@ -12,6 +12,7 @@ public static class AuthenticationEndpoints
             .WithTags("Auth");
 
         group.MapPost("/login", DoLogin)
+            .Produces<RegisteredUserResponse>(StatusCodes.Status200OK)
             .Produces<ErrorResponse>(StatusCodes.Status401Unauthorized);
     }
 

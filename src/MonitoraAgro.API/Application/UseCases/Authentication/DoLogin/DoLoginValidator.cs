@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Microsoft.AspNetCore.Identity.Data;
+using MonitoraAgro.API.Application.DTOs.Requests;
 using MonitoraAgro.API.Application.Errors;
 using MonitoraAgro.API.Domain.Extensions;
 

@@ -12,4 +12,8 @@ public class UserRepository(MonitoraAgroDbContext context) : IUserRepository
 
     public async Task<bool> ExistActiveUserWithEmail(string email)
         => await context.Users.AnyAsync(u => u.IsActive && u.Email.Equals(email));
+
+    public async Task<User?> GetByEmail(string email)
+        => await context.Users.AsNoTracking()
+            .FirstOrDefaultAsync(u => u.IsActive && u.Email.Equals(email));
 }

@@ -10,4 +10,5 @@ public static class ErrorMessages
     public const string PASSWORD_MIN_LENGTH = "A senha deve conter no mínimo 8 caracteres";
     public const string INVALID_EMAIL = "O e-mail é inválido.";
     public const string EMAIL_ALREADY_REGISTERED = "Email já registrado";
+    public const string INVALID_LOGIN = "Email ou senha inválidos.";
 }
