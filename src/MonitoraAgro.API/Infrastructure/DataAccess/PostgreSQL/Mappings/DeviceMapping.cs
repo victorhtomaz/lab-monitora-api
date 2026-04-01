@@ -48,6 +48,7 @@ public class DeviceMapping : IEntityTypeConfiguration<Device>
 
         builder.HasMany(d => d.Sensors)
             .WithOne()
-            .HasForeignKey(s => s.DeviceId);
+            .HasForeignKey(s => s.DeviceId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
