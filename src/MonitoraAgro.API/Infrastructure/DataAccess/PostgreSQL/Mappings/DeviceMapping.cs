@@ -46,6 +46,9 @@ public class DeviceMapping : IEntityTypeConfiguration<Device>
             .HasColumnType("TIMESTAMPTZ")
             .IsRequired();
 
+        builder.HasIndex(d => d.TokenHash)
+            .IsUnique();
+
         builder.HasMany(d => d.Sensors)
             .WithOne()
             .HasForeignKey(s => s.DeviceId)
