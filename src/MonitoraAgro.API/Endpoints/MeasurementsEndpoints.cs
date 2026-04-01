@@ -1,6 +1,6 @@
 using MonitoraAgro.API.Application.DTOs.Requests;
 using MonitoraAgro.API.Application.DTOs.Responses;
-using MonitoraAgro.API.Application.UseCases.Measurements;
+using MonitoraAgro.API.Application.UseCases.Measurements.Record;
 
 namespace MonitoraAgro.API.Endpoints;
 
