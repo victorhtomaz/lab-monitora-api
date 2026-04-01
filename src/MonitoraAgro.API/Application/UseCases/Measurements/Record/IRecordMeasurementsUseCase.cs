@@ -1,6 +1,6 @@
 using MonitoraAgro.API.Application.DTOs.Requests;
 
-namespace MonitoraAgro.API.Application.UseCases.Measurements;
+namespace MonitoraAgro.API.Application.UseCases.Measurements.Record;
 
 public interface IRecordMeasurementsUseCase
 {
