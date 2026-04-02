@@ -42,7 +42,7 @@ public static class DependencyInjection
 
     private static void AddPasswordEncrypter(IServiceCollection services)
     {
-        services.AddScoped<IPasswordEncripter, BCryptNet>();
+        services.AddScoped<IHasher, BCryptNet>();
     }
 
     private static void AddTokens(IServiceCollection services, IConfiguration configuration)
