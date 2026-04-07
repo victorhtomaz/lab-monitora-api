@@ -6,7 +6,7 @@ namespace MonitoraAgro.API.Endpoints;
 
 public static class MeasurementsEndpoints
 {
-    public static void MapMeasurementsEndpoint(this WebApplication app)
+    public static void MapMeasurementsEndpoints(this WebApplication app)
     {
         var group = app.MapGroup("/measurements")
             .WithTags("Measurements");

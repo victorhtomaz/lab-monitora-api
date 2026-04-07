@@ -1,4 +1,6 @@
 using MonitoraAgro.API.Application;
+using MonitoraAgro.API.Common.Tokens;
+using MonitoraAgro.API.Domain.Security.Tokens;
 using MonitoraAgro.API.Endpoints;
 using MonitoraAgro.API.Infrastructure;
 using MonitoraAgro.API.Middlewares;
@@ -12,6 +14,8 @@ builder.Services.AddExceptionHandler<ResponseExceptionHandler>();
 
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
+
+builder.Services.AddScoped<ITokenProvider, HttpContextTokenValue>();
 
 var app = builder.Build();
 
@@ -29,6 +33,6 @@ app.MapGet("/", () => "Hello");
 
 app.MapUserEndpoints();
 app.MapAuthEndpoints();
-
+app.MapMeasurementsEndpoints();
 
 app.Run();

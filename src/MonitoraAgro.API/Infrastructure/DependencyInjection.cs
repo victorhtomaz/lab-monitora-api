@@ -3,11 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using MonitoraAgro.API.Domain.Repositories;
 using MonitoraAgro.API.Domain.Security.Cryptography;
 using MonitoraAgro.API.Domain.Security.Tokens;
+using MonitoraAgro.API.Domain.Services.DeviceContext;
 using MonitoraAgro.API.Infrastructure.DataAccess;
 using MonitoraAgro.API.Infrastructure.DataAccess.PostgreSQL;
 using MonitoraAgro.API.Infrastructure.DataAccess.Repositories;
 using MonitoraAgro.API.Infrastructure.Security.Cryptography;
 using MonitoraAgro.API.Infrastructure.Security.Tokens.Access.Generator;
+using MonitoraAgro.API.Infrastructure.Services.DeviceContext;
 
 namespace MonitoraAgro.API.Infrastructure;
 
@@ -16,8 +18,10 @@ public static class DependencyInjection
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         AddDbContext(services, configuration);
+        AddInfluxDB(services, configuration);
         AddRepositories(services);
         AddPasswordEncrypter(services);
+        AddServices(services);
         AddTokens(services, configuration);
     }
 
@@ -30,7 +34,10 @@ public static class DependencyInjection
     
     private static void AddInfluxDB(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddSingleton<IInfluxDBClient>(o => new InfluxDBClient(""));
+        var url = configuration.GetValue<string>("InfluxDB:Url") ?? "http://localhost:8086";
+        var token = configuration.GetValue<string>("InfluxDB:Token") ?? string.Empty;
+
+        services.AddSingleton<IInfluxDBClient>(_ => new InfluxDBClient(url, token));
     }
 
     private static void AddRepositories(IServiceCollection services)
@@ -38,11 +45,18 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ISensorRepository, SensorRepository>();
+        services.AddScoped<ITimeSeriesMeasurementRepository, TimeSeriesMeasurementRepository>();
     }
 
     private static void AddPasswordEncrypter(IServiceCollection services)
     {
         services.AddScoped<IHasher, BCryptNet>();
+    }
+
+    private static void AddServices(IServiceCollection services)
+    {
+        services.AddScoped<IDeviceContext, DeviceContext>();
     }
 
     private static void AddTokens(IServiceCollection services, IConfiguration configuration)

@@ -1,4 +1,5 @@
 ﻿using MonitoraAgro.API.Application.UseCases.Authentication.DoLogin;
+using MonitoraAgro.API.Application.UseCases.Measurements.Record;
 using MonitoraAgro.API.Application.UseCases.User.Register;
 
 namespace MonitoraAgro.API.Application;
@@ -15,5 +16,7 @@ public static class DependencyInjection
         services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
 
         services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
+
+        services.AddScoped<IRecordMeasurementsUseCase, RecordMeasurementsUseCase>();
     }
 }
