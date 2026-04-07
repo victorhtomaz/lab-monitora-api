@@ -43,7 +43,7 @@ public class FieldMapping : IEntityTypeConfiguration<Field>
             .IsRequired();
 
         builder.HasMany(f => f.Devices)
-            .WithOne()
+            .WithOne(d => d.Field)
             .HasForeignKey(d => d.FieldId);
     }
 }

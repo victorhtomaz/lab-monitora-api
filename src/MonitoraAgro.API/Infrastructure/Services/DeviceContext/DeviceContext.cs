@@ -23,6 +23,7 @@ public class DeviceContext : IDeviceContext
 
         return await _dbContext.Devices
             .AsNoTracking()
+            .Include(d => d.Field)
             .FirstAsync(d => d.Id == deviceId);
     }
 }

@@ -11,8 +11,8 @@ public class TimeSeriesMeasurementRepository(
     IInfluxDBClient influxDbClient, 
     IConfiguration configuration) : ITimeSeriesMeasurementRepository
 {
-    private readonly string _bucket = configuration.GetValue<string>("InfluxDB:Bucket") ?? "default";
-    private readonly string _organization = configuration.GetValue<string>("InfluxDB:Organization") ?? "default";
+    private readonly string _bucket = configuration.GetValue<string>("Settings:InfluxDB:Bucket") ?? "default";
+    private readonly string _organization = configuration.GetValue<string>("Settings:InfluxDB:Organization") ?? "default";
 
     public async Task InsertSensorsData(Device device, IEnumerable<SensorMeasurementInput> measurements, long timestamp)
     {
@@ -20,15 +20,13 @@ public class TimeSeriesMeasurementRepository(
 
         var points = measurements
             .Select(measurement => PointData
-                .Measurement("sensor_measurements")
-                .Tag("internal_key", measurement.InternalKey)
-                .Field("value", measurement.Value)
-                .Timestamp(recordedAt, precision))
-            .ToList();
-
-        if (points.Count == 0)
-            return;
-
+                .Measurement("ambiente")
+                .Tag("user_id", device.Field.UserId.ToString())
+                .Tag("field_id", device.FieldId.ToString())
+                .Tag("device_id", device.Id.ToString())
+                .Field(measurement.InternalKey, measurement.Value)
+                .Timestamp(recordedAt, precision));
+            
         await influxDbClient.GetWriteApiAsync().WritePointsAsync(points, _bucket, _organization);
     }
 

@@ -18,7 +18,7 @@ public static class DependencyInjection
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         AddDbContext(services, configuration);
-        AddInfluxDB(services, configuration);
+        AddInfluxDb(services, configuration);
         AddRepositories(services);
         AddPasswordEncrypter(services);
         AddServices(services);
@@ -32,10 +32,10 @@ public static class DependencyInjection
         services.AddDbContext<MonitoraAgroDbContext>(options =>options.UseNpgsql(connectionString));
     }
     
-    private static void AddInfluxDB(IServiceCollection services, IConfiguration configuration)
+    private static void AddInfluxDb(IServiceCollection services, IConfiguration configuration)
     {
-        var url = configuration.GetValue<string>("InfluxDB:Url") ?? "http://localhost:8086";
-        var token = configuration.GetValue<string>("InfluxDB:Token") ?? string.Empty;
+        var url = configuration.GetValue<string>("Settings:InfluxDB:Url") ?? "http://localhost:8086";
+        var token = configuration.GetValue<string>("Settings:InfluxDB:Token") ?? string.Empty;
 
         services.AddSingleton<IInfluxDBClient>(_ => new InfluxDBClient(url, token));
     }

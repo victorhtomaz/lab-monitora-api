@@ -10,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddExceptionHandler<ResponseExceptionHandler>();
 
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -27,7 +29,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseExceptionHandler(_ => { });
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.MapGet("/", () => "Hello");
 

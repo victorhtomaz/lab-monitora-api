@@ -9,7 +9,8 @@ public static class MeasurementsEndpoints
     public static void MapMeasurementsEndpoints(this WebApplication app)
     {
         var group = app.MapGroup("/measurements")
-            .WithTags("Measurements");
+            .WithTags("Measurements")
+            ;
 
         group.MapPost("/", RecordMeasurements);
     }

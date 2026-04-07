@@ -36,8 +36,8 @@ public class RecordMeasurementsUseCase : IRecordMeasurementsUseCase
         var sensorsData = sensors.Select(sensor =>
         {
             var value = request.data[sensor.InternalKey];
-            var doubleValue = Convert.ToDouble(value, CultureInfo.InvariantCulture);
-            return new SensorMeasurementInput(sensor.InternalKey, doubleValue);
+            //var doubleValue = Convert.ToDouble(value, CultureInfo.InvariantCulture);
+            return new SensorMeasurementInput(sensor.InternalKey, value);
         });
 
         await _timeSeriesMeasurementRepository.InsertSensorsData(device, sensorsData, request.timestamp);
