@@ -2,5 +2,5 @@
 
 public interface ITokenProvider
 {
-    public string Value();
+    public (string identifier, string token) GetCredentials();
 }
