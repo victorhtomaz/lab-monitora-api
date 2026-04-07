@@ -2,6 +2,6 @@
 
 public interface IHasher
 {
-    public string Encrypt(string input);
+    public string Hash(string input);
     public bool IsValid(string input, string hash);
 }

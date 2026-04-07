@@ -30,7 +30,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
     {
         await Validate(request);
         
-        var passwordHash = _hasher.Encrypt(request.Password);
+        var passwordHash = _hasher.Hash(request.Password);
 
         var user = new Domain.Entities.User
         {
