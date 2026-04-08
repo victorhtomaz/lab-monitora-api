@@ -23,7 +23,7 @@ public class BasicAuthenticationHandler(
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
         if (string.IsNullOrEmpty(Request.Headers.Authorization))
-            return AuthenticateResult.Fail("Header de autorização não encontrado.");
+            return AuthenticateResult.NoResult();
 
         try
         {
