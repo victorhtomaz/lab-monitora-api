@@ -45,6 +45,7 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IDeviceRepository, DeviceRepository>();
         services.AddScoped<ISensorRepository, SensorRepository>();
         services.AddScoped<ITimeSeriesMeasurementRepository, TimeSeriesMeasurementRepository>();
     }
