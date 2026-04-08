@@ -2,7 +2,7 @@
 using MonitoraAgro.API.Application.DTOs.Responses;
 using MonitoraAgro.API.Application.UseCases.User.Register;
 
-namespace MonitoraAgro.API.Endpoints;
+namespace MonitoraAgro.API.Core.Endpoints;
 
 public static class UserEndpoints
 {

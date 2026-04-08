@@ -1,8 +1,7 @@
 using MonitoraAgro.API.Application.DTOs.Requests;
-using MonitoraAgro.API.Application.DTOs.Responses;
 using MonitoraAgro.API.Application.UseCases.Measurements.Record;
 
-namespace MonitoraAgro.API.Endpoints;
+namespace MonitoraAgro.API.Core.Endpoints;
 
 public static class MeasurementsEndpoints
 {
@@ -10,7 +9,7 @@ public static class MeasurementsEndpoints
     {
         var group = app.MapGroup("/measurements")
             .WithTags("Measurements")
-            ;
+            .RequireAuthorization();
 
         group.MapPost("/", RecordMeasurements);
     }

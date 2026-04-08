@@ -1,9 +1,9 @@
+using Microsoft.AspNetCore.Authentication;
 using MonitoraAgro.API.Application;
-using MonitoraAgro.API.Common.Tokens;
-using MonitoraAgro.API.Domain.Security.Tokens;
-using MonitoraAgro.API.Endpoints;
+using MonitoraAgro.API.Core.Endpoints;
+using MonitoraAgro.API.Core.Handlers;
+using MonitoraAgro.API.Core.Middlewares;
 using MonitoraAgro.API.Infrastructure;
-using MonitoraAgro.API.Middlewares;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,12 +12,15 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddAuthentication("Basic")
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("Basic", _ => { });
+
+builder.Services.AddAuthorization();
+
 builder.Services.AddExceptionHandler<ResponseExceptionHandler>();
 
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
-
-builder.Services.AddScoped<ITokenProvider, HttpContextTokenValue>();
 
 var app = builder.Build();
 
@@ -29,7 +32,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseExceptionHandler(_ => { });
 
-//app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseHttpsRedirection();
 
 app.MapGet("/", () => "Hello");
 
