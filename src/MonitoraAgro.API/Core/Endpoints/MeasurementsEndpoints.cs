@@ -9,7 +9,11 @@ public static class MeasurementsEndpoints
     {
         var group = app.MapGroup("/measurements")
             .WithTags("Measurements")
-            .RequireAuthorization();
+            .RequireAuthorization(policy =>
+            {
+                policy.AddAuthenticationSchemes("Basic");
+                policy.RequireAuthenticatedUser();
+            });
 
         group.MapPost("/", RecordMeasurements);
     }
