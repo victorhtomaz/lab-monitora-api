@@ -11,14 +11,14 @@ namespace MonitoraAgro.API.Application.UseCases.Authentication.DoLogin;
 public class DoLoginUseCase : IDoLoginUseCase
 {
     private readonly IUserRepository _userRepository;
-    private readonly IPasswordEncripter _passwordEncripter;
+    private readonly IHasher _hasher;
     private readonly IAccessTokenGenerator _accessTokenGenerator;
     public DoLoginUseCase(IUserRepository userRepository, 
-        IPasswordEncripter passwordEncripter, 
+        IHasher hasher, 
         IAccessTokenGenerator accessTokenGenerator)
     {
         _userRepository = userRepository;
-        _passwordEncripter = passwordEncripter;
+        _hasher = hasher;
         _accessTokenGenerator = accessTokenGenerator;
     }
 
@@ -27,7 +27,7 @@ public class DoLoginUseCase : IDoLoginUseCase
         Validate(request);
 
         var user = await _userRepository.GetByEmail(request.Email);
-        if (user is null || _passwordEncripter.IsValid(request.Password, user.PasswordHash) is false)
+        if (user is null || _hasher.IsValid(request.Password, user.PasswordHash) is false)
             throw new InvalidLoginException();
 
         var accessToken = _accessTokenGenerator.Generate(user.Id);

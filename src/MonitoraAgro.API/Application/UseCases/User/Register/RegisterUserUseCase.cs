@@ -13,16 +13,16 @@ public class RegisterUserUseCase : IRegisterUserUseCase
 {
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IPasswordEncripter _passwordHasher;
+    private readonly IHasher _hasher;
     private readonly IAccessTokenGenerator _accessTokenGenerator;
     public RegisterUserUseCase(IUserRepository userRepository, 
         IUnitOfWork unitOfWork, 
-        IPasswordEncripter passwordHasher,
+        IHasher hasher,
         IAccessTokenGenerator accessTokenGenerator)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
-        _passwordHasher = passwordHasher;
+        _hasher = hasher;
         _accessTokenGenerator = accessTokenGenerator;
     }
 
@@ -30,7 +30,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
     {
         await Validate(request);
         
-        var passwordHash = _passwordHasher.Encrypt(request.Password);
+        var passwordHash = _hasher.Hash(request.Password);
 
         var user = new Domain.Entities.User
         {

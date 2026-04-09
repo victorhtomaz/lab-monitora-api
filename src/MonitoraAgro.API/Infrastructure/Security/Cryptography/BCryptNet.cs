@@ -2,9 +2,9 @@
 
 namespace MonitoraAgro.API.Infrastructure.Security.Cryptography;
 
-public class BCryptNet : IPasswordEncripter
+public class BCryptNet : IHasher
 {
-    public string Encrypt(string password) => BCrypt.Net.BCrypt.HashPassword(password);
+    public string Hash(string input) => BCrypt.Net.BCrypt.HashPassword(input);
 
-    public bool IsValid(string password, string passwordHash) => BCrypt.Net.BCrypt.Verify(password, passwordHash);
+    public bool IsValid(string input, string hash) => BCrypt.Net.BCrypt.Verify(input, hash);
 }

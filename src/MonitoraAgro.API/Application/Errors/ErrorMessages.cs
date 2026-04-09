@@ -11,4 +11,5 @@ public static class ErrorMessages
     public const string INVALID_EMAIL = "O e-mail é inválido.";
     public const string EMAIL_ALREADY_REGISTERED = "Email já registrado";
     public const string INVALID_LOGIN = "Email ou senha inválidos.";
+    public const string SENSOR_NOT_FOUND = "Sensor não encontrado.";
 }

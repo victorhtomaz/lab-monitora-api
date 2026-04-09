@@ -46,5 +46,9 @@ public class UserMapping : IEntityTypeConfiguration<User>
 
         builder.HasIndex(u => u.Email)
             .IsUnique();
+
+        builder.HasMany(u => u.Fields)
+            .WithOne()
+            .HasForeignKey(f => f.UserId);
     }
 }
