@@ -1,3 +1,3 @@
 namespace MonitoraAgro.API.Application.DTOs.Requests;
 
-public record RegisterNotificationTokenRequest(string Token);
+public record RegisterNotificationTokenRequest(Guid InstallationId, string Token);

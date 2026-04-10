@@ -1,5 +1,10 @@
+using MonitoraAgro.API.Domain.Entities;
+
 namespace MonitoraAgro.API.Domain.Repositories;
 
-public class INotificationTokenRepository
+public interface INotificationTokenRepository
 {
+    public Task<NotificationToken?> GetByInstallationId(Guid installationId);
+    public Task Add(NotificationToken notificationToken);
+    public void Update(NotificationToken notificationToken);
 }

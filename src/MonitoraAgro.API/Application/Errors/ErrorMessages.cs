@@ -13,4 +13,5 @@ public static class ErrorMessages
     public const string INVALID_LOGIN = "Email ou senha inválidos.";
     public const string SENSOR_NOT_FOUND = "Sensor não encontrado.";
     public const string NOTIFICATION_TOKEN_REQUIRED = "O token não pode estar vazio.";
+    public const string INSTALLATION_ID_REQUIRED = "O ID da instalação não pode estar vazio.";
 }
