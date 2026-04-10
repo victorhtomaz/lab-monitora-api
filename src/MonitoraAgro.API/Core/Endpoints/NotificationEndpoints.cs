@@ -11,7 +11,7 @@ public static class NotificationEndpoints
             .WithTags("Notifications")
             .RequireAuthorization();
 
-        app.MapPost("/tokens", AddOrUpdateNotificationToken)
+        group.MapPost("/tokens", AddOrUpdateNotificationToken)
             .Produces(StatusCodes.Status204NoContent);
     }
 
