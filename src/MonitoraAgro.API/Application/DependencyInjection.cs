@@ -1,5 +1,6 @@
 ﻿using MonitoraAgro.API.Application.UseCases.Authentication.DoLogin;
 using MonitoraAgro.API.Application.UseCases.Measurements.Record;
+using MonitoraAgro.API.Application.UseCases.Notifications.AddOrUpdateToken;
 using MonitoraAgro.API.Application.UseCases.User.Register;
 
 namespace MonitoraAgro.API.Application;
@@ -18,5 +19,7 @@ public static class DependencyInjection
         services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
 
         services.AddScoped<IRecordMeasurementsUseCase, RecordMeasurementsUseCase>();
+
+        services.AddScoped<IAddOrUpdateNotificationTokenUseCase, AddOrUpdateNotificationTokenUseCase>();
     }
 }
