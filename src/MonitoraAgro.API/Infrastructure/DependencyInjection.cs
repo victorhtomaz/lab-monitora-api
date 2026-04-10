@@ -48,6 +48,7 @@ public static class DependencyInjection
         services.AddScoped<IDeviceRepository, DeviceRepository>();
         services.AddScoped<ISensorRepository, SensorRepository>();
         services.AddScoped<ITimeSeriesMeasurementRepository, TimeSeriesMeasurementRepository>();
+        services.AddScoped<INotificationTokenRepository, NotificationTokenRepository>();
     }
 
     private static void AddPasswordEncrypter(IServiceCollection services)
