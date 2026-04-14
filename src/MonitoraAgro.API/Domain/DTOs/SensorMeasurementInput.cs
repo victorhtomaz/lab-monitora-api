@@ -1,3 +1,3 @@
 ﻿namespace MonitoraAgro.API.Domain.DTOs;
 
-public record SensorMeasurementInput(string InternalKey, double Value);
+public record SensorMeasurementInput(int SensorId, string InternalKey, double Value);

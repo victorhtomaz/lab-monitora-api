@@ -5,6 +5,7 @@ using MonitoraAgro.API.Domain.DTOs;
 using MonitoraAgro.API.Domain.Repositories;
 using MonitoraAgro.API.Domain.Services.DeviceContext;
 using System.Globalization;
+using MonitoraAgro.API.Domain.Services.SensorMeasurement;
 
 namespace MonitoraAgro.API.Application.UseCases.Measurements.Record;
 
@@ -13,14 +14,17 @@ public class RecordMeasurementsUseCase : IRecordMeasurementsUseCase
     private readonly ISensorRepository _sensorRepository;
     private readonly ITimeSeriesMeasurementRepository _timeSeriesMeasurementRepository;
     private readonly IDeviceContext _deviceContext;
+    private readonly ISensorMeasurementQueue _queue;
     public RecordMeasurementsUseCase(
         ISensorRepository sensorRepository,
         ITimeSeriesMeasurementRepository timeSeriesMeasurementRepository,
-        IDeviceContext deviceContext)
+        IDeviceContext deviceContext,
+        ISensorMeasurementQueue queue)
     {
         _sensorRepository = sensorRepository;
         _timeSeriesMeasurementRepository = timeSeriesMeasurementRepository;
         _deviceContext = deviceContext;
+        _queue = queue;
     }
 
     public async Task Execute(RecordMeasurementsRequest request)
@@ -36,8 +40,10 @@ public class RecordMeasurementsUseCase : IRecordMeasurementsUseCase
         var sensorsData = sensors.Select(sensor =>
         {
             var value = request.data[sensor.InternalKey];
-            return new SensorMeasurementInput(sensor.InternalKey, value);
-        });
+            return new SensorMeasurementInput(sensor.Id, sensor.InternalKey, value);
+        }).ToList();
+
+        await _queue.Enqueue(sensorsData);
 
         await _timeSeriesMeasurementRepository.InsertSensorsData(device, sensorsData, request.timestamp);
     }
