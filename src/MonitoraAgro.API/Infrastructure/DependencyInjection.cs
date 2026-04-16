@@ -5,6 +5,7 @@ using MonitoraAgro.API.Domain.Security.Cryptography;
 using MonitoraAgro.API.Domain.Security.Tokens;
 using MonitoraAgro.API.Domain.Services.DeviceContext;
 using MonitoraAgro.API.Domain.Services.LoggedUser;
+using MonitoraAgro.API.Domain.Services.SensorMeasurement;
 using MonitoraAgro.API.Infrastructure.DataAccess;
 using MonitoraAgro.API.Infrastructure.DataAccess.PostgreSQL;
 using MonitoraAgro.API.Infrastructure.DataAccess.Repositories;
@@ -12,6 +13,7 @@ using MonitoraAgro.API.Infrastructure.Security.Cryptography;
 using MonitoraAgro.API.Infrastructure.Security.Tokens.Access.Generator;
 using MonitoraAgro.API.Infrastructure.Services.DeviceContext;
 using MonitoraAgro.API.Infrastructure.Services.LoggedUser;
+using MonitoraAgro.API.Infrastructure.Services.SensorMeasurement;
 
 namespace MonitoraAgro.API.Infrastructure;
 
@@ -60,6 +62,7 @@ public static class DependencyInjection
 
     private static void AddServices(IServiceCollection services)
     {
+        services.AddSingleton<ISensorMeasurementQueue, SensorMeasurementMemoryQueue>();
         services.AddScoped<IDeviceContext, DeviceContext>();
         services.AddScoped<ILoggedUser, LoggedUser>();
     }
