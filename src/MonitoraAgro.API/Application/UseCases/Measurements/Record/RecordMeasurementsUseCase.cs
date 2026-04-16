@@ -43,7 +43,9 @@ public class RecordMeasurementsUseCase : IRecordMeasurementsUseCase
             return new SensorMeasurementInput(sensor.Id, sensor.InternalKey, value);
         }).ToList();
 
-        await _queue.Enqueue(sensorsData);
+        var analyzeMeasurementData = new AnalyzeMeasurementData(device.Field.UserId, sensorsData);
+        
+        await _queue.Enqueue(analyzeMeasurementData);
 
         await _timeSeriesMeasurementRepository.InsertSensorsData(device, sensorsData, request.timestamp);
     }

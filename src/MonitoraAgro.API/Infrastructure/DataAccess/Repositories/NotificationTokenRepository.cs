@@ -15,4 +15,9 @@ public class NotificationTokenRepository(MonitoraAgroDbContext context) : INotif
 
     public void Update(NotificationToken notificationToken)
         => context.NotificationTokens.Update(notificationToken);
+
+    public Task<IList<NotificationToken>> GetAllTokenUser(int userId)
+    {
+        throw new NotImplementedException();
+    }
 }

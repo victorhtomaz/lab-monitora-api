@@ -6,7 +6,7 @@ namespace MonitoraAgro.API.Infrastructure.Services.SensorMeasurement;
 
 public class SensorMeasurementMemoryQueue : ISensorMeasurementQueue
 {
-    private readonly Channel<IList<SensorMeasurementInput>> _channel;
+    private readonly Channel<AnalyzeMeasurementData> _channel;
     public SensorMeasurementMemoryQueue()
     {
         var options = new BoundedChannelOptions(capacity: 2000)
@@ -16,17 +16,15 @@ public class SensorMeasurementMemoryQueue : ISensorMeasurementQueue
             SingleWriter = false
         };
 
-        _channel = Channel.CreateBounded<IList<SensorMeasurementInput>>(options);
+        _channel = Channel.CreateBounded<AnalyzeMeasurementData>(options);
     }
 
-    public ValueTask Enqueue(IEnumerable<SensorMeasurementInput> sensorMeasurementInputs)
+    public ValueTask Enqueue(AnalyzeMeasurementData data)
     {
-        var measurements = sensorMeasurementInputs.ToList();
-
-        return _channel.Writer.WriteAsync(measurements);
+        return _channel.Writer.WriteAsync(data);
     }
 
-    public ValueTask<IList<SensorMeasurementInput>> Dequeue()
+    public ValueTask<AnalyzeMeasurementData> Dequeue()
     {
         return _channel.Reader.ReadAsync();
     }

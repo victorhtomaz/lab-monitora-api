@@ -14,4 +14,9 @@ public class SensorRepository(MonitoraAgroDbContext context) : ISensorRepository
             .AsNoTracking()
             .Where(sensor => sensor.DeviceId == device.Id && internalKeys.Contains(sensor.InternalKey))
             .ToListAsync();
+
+    public Task<IList<Sensor>> GetByIds(IEnumerable<int> ids)
+    {
+        throw new NotImplementedException();
+    }
 }

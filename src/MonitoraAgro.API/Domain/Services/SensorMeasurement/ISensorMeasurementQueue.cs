@@ -4,6 +4,6 @@ namespace MonitoraAgro.API.Domain.Services.SensorMeasurement;
 
 public interface ISensorMeasurementQueue
 {
-    public ValueTask Enqueue(IEnumerable<SensorMeasurementInput> sensorMeasurementInputs);
-    public ValueTask<IList<SensorMeasurementInput>> Dequeue();
+    public ValueTask Enqueue(AnalyzeMeasurementData data);
+    public ValueTask<AnalyzeMeasurementData> Dequeue();
 }

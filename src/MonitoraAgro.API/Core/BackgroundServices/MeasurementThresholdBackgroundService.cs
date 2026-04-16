@@ -25,13 +25,13 @@ public class MeasurementThresholdBackgroundService : BackgroundService
         {
             try
             {
-                var sensorMeasurementInputs = await _sensorMeasurementQueue.Dequeue();
+                var data = await _sensorMeasurementQueue.Dequeue();
 
                 using var scope = _serviceScopeFactory.CreateScope();
                 var analyzeMeasurementThresholdUseCase =
                     scope.ServiceProvider.GetRequiredService<IAnalyzeMeasurementThresholdUseCase>();
 
-                await analyzeMeasurementThresholdUseCase.Execute(sensorMeasurementInputs);
+                await analyzeMeasurementThresholdUseCase.Execute(data);
             }
             catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
             {
