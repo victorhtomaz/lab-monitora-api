@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using MonitoraAgro.API.Application;
+using MonitoraAgro.API.Core.BackgroundServices;
 using MonitoraAgro.API.Core.Endpoints;
 using MonitoraAgro.API.Core.Handlers;
 using MonitoraAgro.API.Core.Middlewares;
@@ -39,6 +40,8 @@ builder.Services.AddAuthentication(options =>
     .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("Basic", _ => { });
 
 builder.Services.AddAuthorization();
+
+builder.Services.AddHostedService<MeasurementThresholdBackgroundService>();
 
 builder.Services.AddExceptionHandler<ResponseExceptionHandler>();
 
