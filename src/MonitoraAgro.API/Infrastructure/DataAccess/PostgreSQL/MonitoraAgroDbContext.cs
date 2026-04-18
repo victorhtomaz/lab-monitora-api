@@ -9,6 +9,7 @@ public class MonitoraAgroDbContext(DbContextOptions<MonitoraAgroDbContext> optio
     public DbSet<Field> Fields { get; set; } = null!;
     public DbSet<Device> Devices { get; set; } = null!;
     public DbSet<Sensor> Sensors { get; set; } = null!;
+    public DbSet<Threshold> Thresholds { get; set; } = null!;
     public DbSet<NotificationToken> NotificationTokens { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

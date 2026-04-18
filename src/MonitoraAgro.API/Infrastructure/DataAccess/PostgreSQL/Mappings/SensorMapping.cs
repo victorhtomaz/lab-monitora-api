@@ -38,5 +38,10 @@ public class SensorMapping : IEntityTypeConfiguration<Sensor>
             .HasColumnName("unit")
             .HasColumnType("VARCHAR")
             .IsRequired();
+
+        builder.HasOne(s => s.Threshold)
+            .WithOne()
+            .HasForeignKey<Threshold>(t => t.SensorId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
