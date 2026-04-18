@@ -1,10 +1,13 @@
-﻿using InfluxDB.Client;
+﻿using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using InfluxDB.Client;
 using Microsoft.EntityFrameworkCore;
 using MonitoraAgro.API.Domain.Repositories;
 using MonitoraAgro.API.Domain.Security.Cryptography;
 using MonitoraAgro.API.Domain.Security.Tokens;
 using MonitoraAgro.API.Domain.Services.DeviceContext;
 using MonitoraAgro.API.Domain.Services.LoggedUser;
+using MonitoraAgro.API.Domain.Services.Notification;
 using MonitoraAgro.API.Domain.Services.SensorMeasurement;
 using MonitoraAgro.API.Infrastructure.DataAccess;
 using MonitoraAgro.API.Infrastructure.DataAccess.PostgreSQL;
@@ -13,6 +16,7 @@ using MonitoraAgro.API.Infrastructure.Security.Cryptography;
 using MonitoraAgro.API.Infrastructure.Security.Tokens.Access.Generator;
 using MonitoraAgro.API.Infrastructure.Services.DeviceContext;
 using MonitoraAgro.API.Infrastructure.Services.LoggedUser;
+using MonitoraAgro.API.Infrastructure.Services.Notification;
 using MonitoraAgro.API.Infrastructure.Services.SensorMeasurement;
 
 namespace MonitoraAgro.API.Infrastructure;
@@ -27,6 +31,7 @@ public static class DependencyInjection
         AddPasswordEncrypter(services);
         AddServices(services);
         AddTokens(services, configuration);
+        AddFirebaseService(services, configuration);
     }
 
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
@@ -65,6 +70,7 @@ public static class DependencyInjection
         services.AddSingleton<ISensorMeasurementQueue, SensorMeasurementMemoryQueue>();
         services.AddScoped<IDeviceContext, DeviceContext>();
         services.AddScoped<ILoggedUser, LoggedUser>();
+        services.AddScoped<INotificationService, FcmNotificationService>();
     }
 
     private static void AddTokens(IServiceCollection services, IConfiguration configuration)
@@ -73,5 +79,17 @@ public static class DependencyInjection
         var expirationTimeInMinutes = configuration.GetValue<uint>("Settings:Jwt:ExpirationTimeInMinutes");
 
         services.AddScoped<IAccessTokenGenerator>(o => new JwtTokenGenerator(signinKey!, expirationTimeInMinutes));
+    }
+
+    private static void AddFirebaseService(IServiceCollection services, IConfiguration configuration)
+    {
+        var firebaseProjectId = configuration.GetValue<string>("Settings:Firebase:ProjectId");
+        var credentialPath = configuration.GetValue<string>("Settings:Firebase:CredentialFilePath");
+
+        FirebaseApp.Create(new AppOptions
+        {
+            ProjectId = firebaseProjectId,
+            Credential = CredentialFactory.FromFile<ServiceAccountCredential>(credentialPath!).ToGoogleCredential()
+        });
     }
 }
