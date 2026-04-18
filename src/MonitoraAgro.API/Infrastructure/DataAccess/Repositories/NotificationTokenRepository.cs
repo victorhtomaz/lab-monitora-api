@@ -15,4 +15,9 @@ public class NotificationTokenRepository(MonitoraAgroDbContext context) : INotif
 
     public void Update(NotificationToken notificationToken)
         => context.NotificationTokens.Update(notificationToken);
+
+    public async Task<IList<NotificationToken>> GetAllTokenUser(int userId)
+        => await context.NotificationTokens
+            .Where(nt => nt.UserId == userId)
+            .ToListAsync();
 }
