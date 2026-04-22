@@ -3,7 +3,7 @@ using MonitoraAgro.API.Application.DTOs.Responses;
 using MonitoraAgro.API.Application.Errors;
 using MonitoraAgro.API.Application.Errors.Exceptions;
 
-namespace MonitoraAgro.API.Core.Middlewares;
+namespace MonitoraAgro.API.Core.Handlers;
 
 public class ResponseExceptionHandler : IExceptionHandler
 {

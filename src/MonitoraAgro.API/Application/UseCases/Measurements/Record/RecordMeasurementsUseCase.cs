@@ -4,7 +4,6 @@ using MonitoraAgro.API.Application.Errors.Exceptions;
 using MonitoraAgro.API.Domain.DTOs;
 using MonitoraAgro.API.Domain.Repositories;
 using MonitoraAgro.API.Domain.Services.DeviceContext;
-using System.Globalization;
 using MonitoraAgro.API.Domain.Services.SensorMeasurement;
 
 namespace MonitoraAgro.API.Application.UseCases.Measurements.Record;
@@ -31,7 +30,7 @@ public class RecordMeasurementsUseCase : IRecordMeasurementsUseCase
     {
         var device = await _deviceContext.GetDevice();
 
-        var internalKeys = request.data.Keys;
+        var internalKeys = request.Data.Keys;
         var sensors = await _sensorRepository.GetByDeviceAndInternalKeys(device, internalKeys);
 
         if (sensors.Count != internalKeys.Count)
@@ -39,7 +38,7 @@ public class RecordMeasurementsUseCase : IRecordMeasurementsUseCase
 
         var sensorsData = sensors.Select(sensor =>
         {
-            var value = request.data[sensor.InternalKey];
+            var value = request.Data[sensor.InternalKey];
             return new SensorMeasurementInput(sensor.Id, sensor.InternalKey, value);
         }).ToList();
 
@@ -47,6 +46,6 @@ public class RecordMeasurementsUseCase : IRecordMeasurementsUseCase
         
         await _queue.Enqueue(analyzeMeasurementData);
 
-        await _timeSeriesMeasurementRepository.InsertSensorsData(device, sensorsData, request.timestamp);
+        await _timeSeriesMeasurementRepository.InsertSensorsData(device, sensorsData, request.Timestamp);
     }
 }
