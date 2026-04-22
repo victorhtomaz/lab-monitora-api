@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MonitoraAgro.API.Application.Errors.Exceptions;
 using MonitoraAgro.API.Domain.Entities;
-using MonitoraAgro.API.Domain.Repositories;
 using MonitoraAgro.API.Domain.Services.LoggedUser;
 using MonitoraAgro.API.Infrastructure.DataAccess.PostgreSQL;
 using System.Security.Claims;

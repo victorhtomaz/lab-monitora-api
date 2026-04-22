@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using MonitoraAgro.API.Application.DTOs.Requests;
+﻿using MonitoraAgro.API.Application.DTOs.Requests;
 using MonitoraAgro.API.Application.DTOs.Responses;
 using MonitoraAgro.API.Application.Errors.Exceptions;
 using MonitoraAgro.API.Domain.Repositories;

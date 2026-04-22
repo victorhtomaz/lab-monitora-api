@@ -5,7 +5,6 @@ using MonitoraAgro.API.Application;
 using MonitoraAgro.API.Core.BackgroundServices;
 using MonitoraAgro.API.Core.Endpoints;
 using MonitoraAgro.API.Core.Handlers;
-using MonitoraAgro.API.Core.Middlewares;
 using MonitoraAgro.API.Infrastructure;
 using MonitoraAgro.API.Infrastructure.Security.Tokens.Access;
 using Scalar.AspNetCore;

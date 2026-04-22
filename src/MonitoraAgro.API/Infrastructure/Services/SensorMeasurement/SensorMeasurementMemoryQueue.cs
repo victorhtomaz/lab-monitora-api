@@ -1,6 +1,6 @@
-using System.Threading.Channels;
 using MonitoraAgro.API.Domain.DTOs;
 using MonitoraAgro.API.Domain.Services.SensorMeasurement;
+using System.Threading.Channels;
 
 namespace MonitoraAgro.API.Infrastructure.Services.SensorMeasurement;
 
