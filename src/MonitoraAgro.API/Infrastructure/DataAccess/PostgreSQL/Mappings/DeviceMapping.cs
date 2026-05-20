@@ -53,5 +53,10 @@ public class DeviceMapping : IEntityTypeConfiguration<Device>
             .WithOne()
             .HasForeignKey(s => s.DeviceId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(d => d.Status)
+            .WithOne()
+            .HasForeignKey<DeviceStatus>(ds => ds.DeviceId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
