@@ -1,3 +1,7 @@
 namespace MonitoraAgro.API.Application.DTOs.Requests;
 
-public record RecordMeasurementsRequest(Dictionary<string, double> Data, long Timestamp);
+public record RecordMeasurementsRequest(
+    Dictionary<string, double> Data, 
+    long Timestamp,
+    int Rssi,
+    double Soc);

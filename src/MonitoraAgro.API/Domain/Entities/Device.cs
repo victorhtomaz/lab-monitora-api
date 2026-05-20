@@ -9,5 +9,6 @@ public class Device : EntityBase
     public uint ReadingIntervalInSeconds { get; set; }
     public IList<Sensor> Sensors { get; set; } = []; 
     public bool IsActive { get; set; }
+    public DeviceStatus Status { get; set; } = null!;
     public DateTime CreatedAt { get; set; }
 }
