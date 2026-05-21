@@ -17,7 +17,7 @@ public static class DeviceEndpoints
             .Produces(StatusCodes.Status204NoContent);
     }
 
-    private static async Task<IResult> GetList(IListDeviceUseCase useCase, PagedRequest request)
+    private static async Task<IResult> GetList(IListDeviceUseCase useCase, [AsParameters] PagedRequest request)
     {
         var response = await useCase.Execute(request);
 
