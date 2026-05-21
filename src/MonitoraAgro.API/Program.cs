@@ -66,6 +66,7 @@ app.MapGet("/", () => "Hello");
 
 app.MapUserEndpoints();
 app.MapAuthEndpoints();
+app.MapDeviceEndpoints();
 app.MapMeasurementsEndpoints();
 app.MapNotificationsEndpoints();
 
