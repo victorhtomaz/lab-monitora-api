@@ -13,7 +13,7 @@ public static class DeviceEndpoints
             .RequireAuthorization();
 
         group.MapGet("/", GetList)
-            .Produces<PagedResponse<DeviceResponse>>()
+            .Produces<PagedResponse<DeviceSummaryResponse>>()
             .Produces(StatusCodes.Status204NoContent);
     }
 

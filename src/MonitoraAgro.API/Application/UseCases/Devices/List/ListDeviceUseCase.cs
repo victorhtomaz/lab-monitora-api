@@ -15,7 +15,7 @@ public class ListDeviceUseCase : IListDeviceUseCase
         _loggedUser = loggedUser;
     }
 
-    public async Task<PagedResponse<DeviceResponse>> Execute(PagedRequest request)
+    public async Task<PagedResponse<DeviceSummaryResponse>> Execute(PagedRequest request)
     {
         // 1- Acessar usuário logado
         var user = await _loggedUser.GetUser();
@@ -24,7 +24,7 @@ public class ListDeviceUseCase : IListDeviceUseCase
         var (devices, totalCount) = await _repository.GetByUserId(user.Id, request.PageNumber, request.PageSize);
         // 3- Mapear os dispositivos para DeviceResponse
         
-        var devicesResponse = devices.Select(device => new DeviceResponse(
+        var devicesResponse = devices.Select(device => new DeviceSummaryResponse(
             Id: device.Id,
             DisplayName: device.DisplayName,
             IsActive: device.IsActive,
@@ -34,7 +34,7 @@ public class ListDeviceUseCase : IListDeviceUseCase
         );
         // 4- Retornar PagedResponse<DeviceResponse>
 
-        return new PagedResponse<DeviceResponse>(
+        return new PagedResponse<DeviceSummaryResponse>(
                 [.. devicesResponse],
                 request.PageNumber,
                 request.PageSize,

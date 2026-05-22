@@ -5,5 +5,5 @@ namespace MonitoraAgro.API.Application.UseCases.Devices.List;
 
 public interface IListDeviceUseCase
 {
-    public Task<PagedResponse<DeviceResponse>> Execute(PagedRequest request);
+    public Task<PagedResponse<DeviceSummaryResponse>> Execute(PagedRequest request);
 }
