@@ -14,4 +14,5 @@ public static class ErrorMessages
     public const string SENSOR_NOT_FOUND = "Sensor não encontrado.";
     public const string NOTIFICATION_TOKEN_REQUIRED = "O token não pode estar vazio.";
     public const string INSTALLATION_ID_REQUIRED = "O ID da instalação não pode estar vazio.";
+    public const string DEVICE_NOT_FOUND = "Dispositivo não encontrado.";
 }

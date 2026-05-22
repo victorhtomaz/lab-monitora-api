@@ -8,7 +8,10 @@ namespace MonitoraAgro.API.Infrastructure.DataAccess.Repositories;
 public class DeviceRepository(MonitoraAgroDbContext context) : IDeviceRepository
 {
     public async Task<Device?> GetById(int deviceId)
-        => await context.Devices.Include(d => d.Status).FirstOrDefaultAsync(d => d.Id == deviceId);
+        => await context.Devices
+            .Include(d => d.Status)
+            .Include(d => d.Sensors)
+            .FirstOrDefaultAsync(d => d.Id == deviceId);
 
     public async Task<(IList<Device> Devices, int TotalCount)> GetByUserId(int userId, int page, int pageSize)
     {
