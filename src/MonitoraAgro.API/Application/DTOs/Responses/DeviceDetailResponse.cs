@@ -5,5 +5,5 @@ public record DeviceDetailResponse(
     string DisplayName, 
     uint ReadingIntervalInSeconds,
     DeviceStatusResponse Status,
-    IList<SensorResponse> Sensors
+    IList<SensorSummaryResponse> Sensors
 );

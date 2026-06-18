@@ -28,7 +28,7 @@ public class GetDeviceByIdUseCase : IGetDeviceByIdUseCase
                     LastSoc: device.Status.LastSoc,
                     LastSeenAt: device.Status.LastSeenAt
                 ),
-                Sensors: [.. device.Sensors.Select(s => new SensorResponse(
+                Sensors: [.. device.Sensors.Select(s => new SensorSummaryResponse(
                     Id: s.Id,
                     DisplayName: s.DisplayName,
                     Unit: s.Unit

@@ -20,6 +20,8 @@ public static class DeviceEndpoints
         group.MapGet("/{id:int}", GetById)
             .Produces<DeviceDetailResponse>()
             .Produces<ErrorResponse>(StatusCodes.Status404NotFound);
+
+        group.MapGet("/{deviceId:int}/sensors/{sensorId}", () => {});
     }
 
     private static async Task<IResult> GetList(IListDeviceUseCase useCase, [AsParameters] PagedRequest request)
@@ -37,5 +39,11 @@ public static class DeviceEndpoints
         var response = await useCase.Execute(id);
         
         return TypedResults.Ok(response);
+    }
+
+    private static async Task<IResult> GetDeviceSensor()
+    {
+        
+        return TypedResults.Ok();
     }
 }
