@@ -33,4 +33,8 @@ public class DeviceRepository(MonitoraAgroDbContext context) : IDeviceRepository
 
     public void Update(Device device)
         => context.Devices.Update(device);
+
+    public async Task<bool> ExistActiveDeviceWithId(int id)
+        => await context.Devices
+            .AnyAsync(device => device.IsActive && device.Id == id);
 }

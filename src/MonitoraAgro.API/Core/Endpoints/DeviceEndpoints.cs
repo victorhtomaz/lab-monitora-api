@@ -1,6 +1,7 @@
 ﻿using MonitoraAgro.API.Application.DTOs.Requests;
 using MonitoraAgro.API.Application.DTOs.Responses;
 using MonitoraAgro.API.Application.UseCases.Devices.GetById;
+using MonitoraAgro.API.Application.UseCases.Devices.GetSensorDetail;
 using MonitoraAgro.API.Application.UseCases.Devices.List;
 
 namespace MonitoraAgro.API.Core.Endpoints;
@@ -16,12 +17,14 @@ public static class DeviceEndpoints
         group.MapGet("/", GetList)
             .Produces<PagedResponse<DeviceSummaryResponse>>()
             .Produces(StatusCodes.Status204NoContent);
-
+        
         group.MapGet("/{id:int}", GetById)
             .Produces<DeviceDetailResponse>()
             .Produces<ErrorResponse>(StatusCodes.Status404NotFound);
 
-        group.MapGet("/{deviceId:int}/sensors/{sensorId}", () => {});
+        group.MapGet("/{deviceId:int}/sensors/{sensorId:int}", GetDeviceSensor)
+            .Produces<SensorDetailResponse>()
+            .Produces<ErrorResponse>(StatusCodes.Status404NotFound);
     }
 
     private static async Task<IResult> GetList(IListDeviceUseCase useCase, [AsParameters] PagedRequest request)
@@ -41,9 +44,10 @@ public static class DeviceEndpoints
         return TypedResults.Ok(response);
     }
 
-    private static async Task<IResult> GetDeviceSensor()
+    private static async Task<IResult> GetDeviceSensor(IGetSensorDetailsUseCase useCase, int deviceId, int sensorId)
     {
+        var response = await useCase.Execute(deviceId, sensorId);
         
-        return TypedResults.Ok();
+        return TypedResults.Ok(response);
     }
 }
