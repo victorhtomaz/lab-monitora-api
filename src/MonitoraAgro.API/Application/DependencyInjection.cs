@@ -4,6 +4,7 @@ using MonitoraAgro.API.Application.UseCases.Devices.List;
 using MonitoraAgro.API.Application.UseCases.Measurements.AnalyzeThreshold;
 using MonitoraAgro.API.Application.UseCases.Measurements.Record;
 using MonitoraAgro.API.Application.UseCases.Notifications.AddOrUpdateToken;
+using MonitoraAgro.API.Application.UseCases.Sensors.GetMeasurements;
 using MonitoraAgro.API.Application.UseCases.User.Register;
 
 namespace MonitoraAgro.API.Application;
@@ -28,5 +29,7 @@ public static class DependencyInjection
 
         services.AddScoped<IListDeviceUseCase, ListDeviceUseCase>();
         services.AddScoped<IGetDeviceByIdUseCase, GetDeviceByIdUseCase>();
+
+        services.AddScoped<IGetSensorMeasurementsUseCase, GetSensorMeasurementsUseCase>();
     }
 }
