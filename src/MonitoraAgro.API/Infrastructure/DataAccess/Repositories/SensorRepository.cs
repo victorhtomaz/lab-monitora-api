@@ -21,4 +21,10 @@ public class SensorRepository(MonitoraAgroDbContext context) : ISensorRepository
             .Include(sensor => sensor.Threshold)
             .Where(sensor => ids.Contains(sensor.Id))
             .ToListAsync();
+
+    public async Task<Sensor?> GetById(int id)
+        => await context.Sensors
+            .AsNoTracking()
+            .Include(sensor => sensor.Threshold)
+            .FirstOrDefaultAsync(sensor => sensor.Id == id);
 }
