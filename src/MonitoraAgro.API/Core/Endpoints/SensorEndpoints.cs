@@ -9,7 +9,8 @@ public static class SensorEndpoints
     public static void MapSensorEndpoints(this WebApplication app)
     {
         var group = app.MapGroup("/sensors")
-            .WithTags("Sensors");
+            .WithTags("Sensors")
+            .RequireAuthorization();
 
         group.MapGet("/{id:int}/measurements", GetMeasurements)
             .Produces<SensorMeasurementsResponse>()
@@ -20,9 +21,9 @@ public static class SensorEndpoints
     private static async Task<IResult> GetMeasurements(
         IGetSensorMeasurementsUseCase useCase,
         int id, 
-        [AsParameters] MeasurementFilterRequest filter)
+        [AsParameters] MeasurementFilterRequest filters)
     {
-        var response = await useCase.Execute(id, filter);
+        var response = await useCase.Execute(id, filters);
 
         if (response.Points.Count == 0)
             return TypedResults.NoContent();

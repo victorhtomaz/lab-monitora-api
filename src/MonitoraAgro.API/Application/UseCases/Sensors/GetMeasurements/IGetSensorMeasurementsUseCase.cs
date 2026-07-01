@@ -5,5 +5,5 @@ namespace MonitoraAgro.API.Application.UseCases.Sensors.GetMeasurements;
 
 public interface IGetSensorMeasurementsUseCase
 {
-    public Task<SensorMeasurementsResponse> Execute(int id, MeasurementFilterRequest filter);
+    public Task<SensorMeasurementsResponse> Execute(int id, MeasurementFilterRequest filters);
 }
