@@ -3,6 +3,7 @@ using MonitoraAgro.API.Application.DTOs.Responses;
 using MonitoraAgro.API.Application.UseCases.Devices.GetById;
 using MonitoraAgro.API.Application.UseCases.Devices.GetSensorDetail;
 using MonitoraAgro.API.Application.UseCases.Devices.List;
+using MonitoraAgro.API.Application.UseCases.Devices.My.Configuration;
 
 namespace MonitoraAgro.API.Core.Endpoints;
 
@@ -25,6 +26,14 @@ public static class DeviceEndpoints
         group.MapGet("/{deviceId:int}/sensors/{sensorId:int}", GetDeviceSensor)
             .Produces<SensorDetailResponse>()
             .Produces<ErrorResponse>(StatusCodes.Status404NotFound);
+
+        group.MapGet("/my/configuration", GetDeviceConfigurations)
+            .Produces<DeviceConfigurationResponse>(StatusCodes.Status200OK)
+            .RequireAuthorization(policy =>
+            {
+                policy.AddAuthenticationSchemes("Basic");
+                policy.RequireAuthenticatedUser();
+            });
     }
 
     private static async Task<IResult> GetList(IListDeviceUseCase useCase, [AsParameters] PagedRequest request)
@@ -48,6 +57,13 @@ public static class DeviceEndpoints
     {
         var response = await useCase.Execute(deviceId, sensorId);
         
+        return TypedResults.Ok(response);
+    }
+
+    private static async Task<IResult> GetDeviceConfigurations(IGetDeviceConfigurationUseCase useCase)
+    {
+        var response = await useCase.Execute();
+
         return TypedResults.Ok(response);
     }
 }

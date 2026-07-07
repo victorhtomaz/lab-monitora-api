@@ -37,4 +37,10 @@ public class DeviceRepository(MonitoraAgroDbContext context) : IDeviceRepository
     public async Task<bool> ExistActiveDeviceWithId(int id)
         => await context.Devices
             .AnyAsync(device => device.IsActive && device.Id == id);
+
+    public async Task<Device?> GetConfigurationById(int deviceId)
+        => await context.Devices
+            .Include(d => d.Sensors)
+            .ThenInclude(s => s.Threshold)
+            .FirstOrDefaultAsync(d => d.Id == deviceId);
 }
