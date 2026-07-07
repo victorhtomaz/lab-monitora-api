@@ -28,6 +28,7 @@ public static class DeviceEndpoints
             .Produces<ErrorResponse>(StatusCodes.Status404NotFound);
 
         group.MapGet("/my/configuration", GetDeviceConfigurations)
+            .Produces<DeviceConfigurationResponse>(StatusCodes.Status200OK)
             .RequireAuthorization(policy =>
             {
                 policy.AddAuthenticationSchemes("Basic");
