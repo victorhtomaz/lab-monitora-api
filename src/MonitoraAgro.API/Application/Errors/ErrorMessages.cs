@@ -15,4 +15,6 @@ public static class ErrorMessages
     public const string NOTIFICATION_TOKEN_REQUIRED = "O token não pode estar vazio.";
     public const string INSTALLATION_ID_REQUIRED = "O ID da instalação não pode estar vazio.";
     public const string DEVICE_NOT_FOUND = "Dispositivo não encontrado.";
+    public const string NOTIFICATION_ENABLED_REQUIRED = "O campo de notificação deve ser definido como verdadeiro ou falso.";
+    public const string LOWER_LIMIT_GREATER_THAN_UPPER_LIMIT = "O limite inferior não pode ser maior que o limite superior.";
 }
