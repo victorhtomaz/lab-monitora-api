@@ -27,4 +27,12 @@ public class SensorRepository(MonitoraAgroDbContext context) : ISensorRepository
             .AsNoTracking()
             .Include(sensor => sensor.Threshold)
             .FirstOrDefaultAsync(sensor => sensor.Id == id);
+
+    public async Task<Sensor?> GetForUpdateAsync(int id)
+        => await context.Sensors
+            .Include(sensor => sensor.Threshold)
+            .FirstOrDefaultAsync(sensor => sensor.Id == id);
+
+    public void Update(Sensor sensor)
+        => context.Sensors.Update(sensor);
 }

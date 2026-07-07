@@ -1,6 +1,7 @@
 ﻿using MonitoraAgro.API.Application.DTOs.Requests;
 using MonitoraAgro.API.Application.DTOs.Responses;
 using MonitoraAgro.API.Application.UseCases.Sensors.GetMeasurements;
+using MonitoraAgro.API.Application.UseCases.Sensors.UpdateThreshold;
 
 namespace MonitoraAgro.API.Core.Endpoints;
 
@@ -16,6 +17,10 @@ public static class SensorEndpoints
             .Produces<SensorMeasurementsResponse>()
             .Produces(StatusCodes.Status204NoContent)
             .Produces<ErrorResponse>(StatusCodes.Status404NotFound);
+
+        group.MapPut("/{id:int}/thresholds", UpdateSensorThreshold)
+            .Produces(StatusCodes.Status200OK)
+            .Produces<ErrorResponse>(StatusCodes.Status404NotFound);
     }
 
     private static async Task<IResult> GetMeasurements(
@@ -29,5 +34,15 @@ public static class SensorEndpoints
             return TypedResults.NoContent();
 
         return TypedResults.Ok(response);
+    }
+
+    private static async Task<IResult> UpdateSensorThreshold(
+        IUpdateSensorThresholdUseCase useCase,
+        int id,
+        UpdateSensorThresholdRequest request)
+    {
+        await useCase.Execute(id, request);
+
+        return TypedResults.Ok();
     }
 }
