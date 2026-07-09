@@ -97,7 +97,7 @@ public class AnalyzeMeasurementThresholdUseCase : IAnalyzeMeasurementThresholdUs
 
         await _notificationService.SendNotificationToAllTokens(title, message, tokens);
 
-        await UpdateNotifiedAt([.. exceededMeasurements!.Select(x => x!.SensorEntity)]);
+        await UpdateNotifiedAt([.. exceededMeasurements.Select(x => x.SensorEntity)]);
     }
 
     private async Task UpdateNotifiedAt(IList<Sensor> sensors)
