@@ -17,7 +17,6 @@ public class SensorRepository(MonitoraAgroDbContext context) : ISensorRepository
 
     public async Task<IList<Sensor>> GetByIds(IEnumerable<int> ids)
         => await context.Sensors
-            .AsNoTracking()
             .Include(sensor => sensor.Threshold)
             .Where(sensor => ids.Contains(sensor.Id))
             .ToListAsync();
